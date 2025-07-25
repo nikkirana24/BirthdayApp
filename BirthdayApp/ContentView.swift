@@ -16,12 +16,14 @@ struct ContentView: View {
     
     var body: some View {
         NavigationStack {
-            List(friends){ friend in
-                HStack {
-                    Text(friend.name)
-                    Spacer()
-                    Text(friend.birthday, format:
-                            .dateTime.month(.wide).day().year())
+            List {
+                ForEach(friends) { friend in
+                    HStack {
+                        Text(friend.name)
+                        Spacer()
+                        Text(friend.birthday, format:
+                                .dateTime.month(.wide).day().year())
+                    }
                 }
             }
             .navigationTitle("Birthdays")
@@ -46,6 +48,12 @@ struct ContentView: View {
             .padding()
             .background(.bar)
         }
+    }
+    func deleteFriend(at offsets: IndexSet) {
+            for index in offsets {
+                    let friendToDelete = friends[index]
+                    context.delete(friendToDelete)
+            }
     }
 }
 
